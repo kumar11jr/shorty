@@ -9,7 +9,7 @@ const app = express();
 connect();
 
 app.get('/',(req:any, res:any) => {
-  res.send("hijkhuygtf")
+  res.send("This is Test Route")
 })
 
 
@@ -17,17 +17,16 @@ app.get('/api/data', async (req: any, res: any) => {
   const newData = new model({
     url: 'www.google.com',
     hashcode: 'gg.com'
-  });
+});
   
   
-  newData.save()
-    .then((savedData: any) => {
+newData.save()
+  .then((savedData: any) => {
       console.log('Saved:', savedData);
-    })
-    .catch((error: any) => {
+  })
+  .catch((error: any) => {
       console.error('Error saving data:', error);
-    });
-
+  });
     res.send('okiee')
 });
 
