@@ -1,20 +1,20 @@
 require('dotenv').config();
-const model = require('./db/schema');
+const { Shortner } = require('./db/schema');
 const express = require('express');
-const { connect } = require('./db/conn');
+const { connectDB } = require('./db/conn');
 
 const app = express();
 
-connect();
+connectDB();
 
 app.get('/', (req: any, res: any) => {
   res.send('This is Test Route');
 });
 
 app.get('/api/data', async (req: any, res: any) => {
-  const newData = new model({
+  const newData = new Shortner({
     url: 'www.google.com',
-    hashcode: 'gg.com',
+    hashcode: 'oggo.cm',
   });
 
   newData

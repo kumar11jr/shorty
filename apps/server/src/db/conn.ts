@@ -1,10 +1,8 @@
-import mongoose from 'mongoose';
+const Mongoose = require('mongoose');
 require('dotenv').config();
 
-async function connect() {
-  return mongoose.connect(`${process.env.DB_KEY}`);
-}
+const uri = `${process.env.DB_KEY}`;
 
-module.exports = {
-  connect,
+export const connectDB = async () => {
+  await Mongoose.connect(uri);
 };
