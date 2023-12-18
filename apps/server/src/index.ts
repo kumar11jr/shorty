@@ -1,15 +1,14 @@
 require('dotenv').config()
 const model = require("./db/schema")
 const express = require('express');
-const {connectToDB} = require('./db/conn')
+const {connect} = require('./db/conn')
 
 
 const app = express();
-// console.log(process.env.DB_PASS)
-connectToDB();
+
+connect();
 
 app.get('/',(req:any, res:any) => {
-  // run()
   res.send("hijkhuygtf")
 })
 

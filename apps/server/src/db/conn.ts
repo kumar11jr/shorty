@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-async function connectToDB(){
+async function connect(){
   return mongoose.connect(`${process.env.DB_KEY}`)
 }
 
@@ -14,5 +14,5 @@ async function connectToDB(){
 // });
 
 module.exports = {
-  connectToDB,
+  connect
 }
