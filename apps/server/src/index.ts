@@ -6,7 +6,7 @@ const {connectToDB} = require('./db/conn')
 
 const app = express();
 // console.log(process.env.DB_PASS)
-connectToDB(`mongodb+srv://kumarshahil828:${process.env.DB_KEY}@cluster0.9ryvhye.mongodb.net/test?retryWrites=true&w=majority`)
+connectToDB();
 
 app.get('/',(req:any, res:any) => {
   // run()
@@ -17,7 +17,7 @@ app.get('/',(req:any, res:any) => {
 app.get('/api/data', async (req: any, res: any) => {
   const newData = new model({
     url: 'www.google.com',
-    hashcode: 'hello World'
+    hashcode: 'gg.com'
   });
   
   

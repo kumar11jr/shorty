@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+require('dotenv').config();
 
-async function connectToDB(url:any){
-  return mongoose.connect(url)
+async function connectToDB(){
+  return mongoose.connect(`${process.env.DB_KEY}`)
 }
 
 // const DB = 'mongodb+srv://kumarshahil828:Randi123@cluster0.9ryvhye.mongodb.net/?retryWrites=true&w=majority';
