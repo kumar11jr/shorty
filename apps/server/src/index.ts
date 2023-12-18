@@ -1,17 +1,18 @@
 require('dotenv').config();
 const { Shortner } = require('./db/schema');
-const express = require('express');
+import Express from "express";
 const { connectDB } = require('./db/conn');
+import {TypedRequestBody} from './types/ITypedReq'
 
-const app = express();
+const app = Express();
 
 connectDB();
 
-app.get('/', (req: any, res: any) => {
-  res.send('This is Test Route');
+app.get('/', (_req: Express.Request, res: Express.Response) => {
+  res.status(200).send("OK");
 });
 
-app.get('/api/data', async (req: any, res: any) => {
+app.get('/api/data', async (_req: TypedRequestBody<{url: string, hashcode: string}>, res: Express.Response) => {
   const newData = new Shortner({
     url: 'www.google.com',
     hashcode: 'oggo.cm',
