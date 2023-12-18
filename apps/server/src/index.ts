@@ -1,28 +1,36 @@
-import { Collection } from 'mongoose';
-import run from './db/conn'
-import data from './db/schema';
+require('dotenv').config()
+const model = require("./db/schema")
 const express = require('express');
+const {connectToDB} = require('./db/conn')
+
 
 const app = express();
+// console.log(process.env.DB_PASS)
+connectToDB(`mongodb+srv://kumarshahil828:${process.env.DB_KEY}@cluster0.9ryvhye.mongodb.net/test?retryWrites=true&w=majority`)
 
 app.get('/',(req:any, res:any) => {
-  run()
+  // run()
   res.send("hijkhuygtf")
 })
 
 
-app.get('/api/data',async(req:any,res:any)=>{
-  try {
-    run(); // Assuming this connects to MongoDB (run your connection logic)
-    
-    // Assuming "Collection" is your Mongoose model
-    data.insertOne({url:"www.google.com",hashcode:"hdsdgvsdglg"});
-    console.log("insett")
-    // Retrieve all data from the collection
-    // res.json(data); // Send retrieved data as JSON
-  } catch (error) {
-    res.status(500).send("Error fetching data");
-  }
-})
+app.get('/api/data', async (req: any, res: any) => {
+  const newData = new model({
+    url: 'www.google.com',
+    hashcode: 'hello World'
+  });
+  
+  
+  newData.save()
+    .then((savedData: any) => {
+      console.log('Saved:', savedData);
+    })
+    .catch((error: any) => {
+      console.error('Error saving data:', error);
+    });
 
-app.listen(8080);
+    res.send('okiee')
+});
+
+
+app.listen(4000);

@@ -10,4 +10,4 @@ const dataSchema = new Schema({
 
 const data = mongoose.model('data', dataSchema)
 
-export default data
+module.exports = data
