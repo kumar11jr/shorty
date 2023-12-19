@@ -27,7 +27,7 @@ app.post('/api/data', async (req: TypedRequestBody<{ url: string; hashcode: stri
   }
 });
 
-app.post('/redirect', async(req: TypedRequestBody<{url: string}>, res)=> {
+app.post('/redirect', async(req: TypedRequestBody<{url: string}>, res: Express.Response)=> {
   try{
      //returns The data according to the hashcode.
     const url = await req.body.url;
