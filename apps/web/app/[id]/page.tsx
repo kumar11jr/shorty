@@ -11,7 +11,7 @@ const page = () => {
 
 	useEffect(() => {
 		// fetch('http://localhost:4000').then((res) => console.log(res));
-		// fetch('http://localhost:4000/redirect', {
+		// fetch('http://localhost:4000/getUrl', {
 		// 	method: 'POST',
 		// 	referrerPolicy: 'no-referrer',
 		// 	headers: {
@@ -29,7 +29,7 @@ const page = () => {
 		// 		console.log('err: ', err);
 		// 	});
 
-		axios.post('http://localhost:4000/redirect', { hashcode: path }).then((res) => {
+		axios.post('http://localhost:4000/getUrl', { hashcode: path }).then((res) => {
 			redirectRoute(res.data[0].url);
 		});
 	}, [path]);
