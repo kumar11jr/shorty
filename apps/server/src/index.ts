@@ -38,7 +38,7 @@ app.post('/api/data', async (req: TypedRequestBody<{ url: string; hashcode: stri
 app.post('/redirect', async (req: TypedRequestBody<{ hashcode: string }>, res: Express.Response) => {
 	try {
 		//returns The data according to the hashcode.
-		const url = await req.body.hashcode;
+		const url = req.body.hashcode;
 		const data = await Shortner.find({ hashcode: url });
 		res.status(200).send(data);
 	} catch (err: any) {

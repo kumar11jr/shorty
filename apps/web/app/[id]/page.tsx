@@ -8,21 +8,22 @@ const page = () => {
 	path = path.substring(1);
 
 	useEffect(() => {
-		fetch('http://localhost:4000').then((res) => console.log(res));
-		// fetch('http://localhost:4000/redirect', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: path,
-		// })
-		// 	.then((res) => {
-		// 		res.json();
-		// 		console.log(res);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log('err', err);
-		// 	});
+		// fetch('http://localhost:4000').then((res) => console.log(res));
+		fetch('http://localhost:4000/redirect', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Request-Method': 'POST',
+			},
+			body: JSON.stringify({ hashcode: path }),
+		})
+			.then((res) => {
+				res.json();
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log('err', err);
+			});
 	}, [path]);
 
 	return <>{path}</>;
