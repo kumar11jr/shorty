@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import axios from 'axios';
 
 const page = () => {
 	const [data, setData] = useState('');
@@ -9,24 +10,30 @@ const page = () => {
 
 	useEffect(() => {
 		// fetch('http://localhost:4000').then((res) => console.log(res));
-		fetch('http://localhost:4000/redirect', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Request-Method': 'POST',
-			},
-			body: JSON.stringify({ hashcode: path }),
-		})
-			.then((res) => {
-				res.json();
-				console.log(res);
-			})
-			.catch((err) => {
-				console.log('err', err);
-			});
+		// fetch('http://localhost:4000/redirect', {
+		// 	method: 'POST',
+		// 	referrerPolicy: 'no-referrer',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		'Access-Control-Allow-Origin': 'http://localhost:3000/:id',
+		// 	},
+		// 	body: JSON.stringify({ hashcode: path }),
+		// })
+		// 	.then((res) => {
+		// 		res.json();
+		// 		console.log(res);
+		// 		// setData(res);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log('err: ', err);
+		// 	});
+
+		axios.post('http://localhost:4000/redirect', { hashcode: path }).then((res) => {
+			console.log(res.data[0].url);
+		});
 	}, [path]);
 
-	return <>{path}</>;
+	return <>{data ? data : path}</>;
 };
 
 export default page;
