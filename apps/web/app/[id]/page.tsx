@@ -1,12 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import Router from 'next/router';
 import axios from 'axios';
 
 const page = () => {
 	const [data, setData] = useState('');
 	let path = usePathname();
-	path = path.substring(1);
+	path = path.substring(1).toLocaleLowerCase();
 
 	useEffect(() => {
 		// fetch('http://localhost:4000').then((res) => console.log(res));
@@ -29,9 +30,13 @@ const page = () => {
 		// 	});
 
 		axios.post('http://localhost:4000/redirect', { hashcode: path }).then((res) => {
-			console.log(res.data[0].url);
+			redirectRoute(res.data[0].url);
 		});
 	}, [path]);
+
+	function redirectRoute(uri: string) {
+		window.location.href = `${uri}`;
+	}
 
 	return <>{data ? data : path}</>;
 };
