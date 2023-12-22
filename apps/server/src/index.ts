@@ -13,29 +13,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
 connectDB();
 
 app.get('/', (_req: Express.Request, res: Express.Response) => {
 	res.status(200).json({ msg: 'Ok Success' });
 });
 
-app.post('/api/data', async (req: TypedRequestBody<{ url: string; hashcode: string }>, res: Express.Response) => {
+app.post('/api/shortUrl', async (req: TypedRequestBody<{ url: string; hashcode: string }>, res: Express.Response) => {
 	try {
 		// Inserts Data into the Db along with the Hashcode.
 		const userInput = {
 			url: req.body.url,
 			hashcode: req.body.hashcode,
 		};
-		const short = await Shortner.create(userInput);
 
+		const short = await Shortner.create(userInput);
 		res.status(201).send(short);
 	} catch (err: any) {
 		res.status(400).send('Error');
 	}
 });
 
-app.post('/getUrl', async (req: TypedRequestBody<{ hashcode: string }>, res: Express.Response) => {
+app.post('/api/getUrl', async (req: TypedRequestBody<{ hashcode: string }>, res: Express.Response) => {
 	try {
 		//returns The data according to the hashcode.
 		const url = req.body.hashcode;
