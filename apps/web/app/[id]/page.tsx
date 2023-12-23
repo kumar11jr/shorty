@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const page = () => {
 	let path = usePathname();
-	path = path.substring(1).toLocaleLowerCase();
+	path = path.substring(1)
 
 	useEffect(() => {
 		axios.post('http://localhost:4000/api/getUrl', { hashcode: path }).then((res) => {
