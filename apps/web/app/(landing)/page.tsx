@@ -1,9 +1,9 @@
-import Hero from './_components/Hero';
+import ShortnerForm from './_components/shortnerform';
 
 export default function LandingPage() {
-    return (
-        <>
-         <Hero />
-        </>
-    )
-  }
+	return (
+		<>
+			<ShortnerForm />
+		</>
+	);
+}
