@@ -21,6 +21,7 @@ const ShotnerForm = () => {
 			if (response.ok) {
 				const data = await response.json();
 				setHashcode(data.hashcode);
+				(event.target as HTMLFormElement).linkInput.value = '';
 			}
 		} catch (error) {
 			console.error('Error submitting URL:', error);
@@ -40,7 +41,6 @@ const ShotnerForm = () => {
 					<h1 className="hero-label">Shorty</h1>
 					<form className="link-form" onSubmit={handleSubmit}>
 						<input type="text" id="linkInput" name="linkInput" placeholder="Paste your link here..." />
-
 						<button type="submit">Submit</button>
 					</form>
 					{hashcode && (
