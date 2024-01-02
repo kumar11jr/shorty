@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 // import React, { FormEvent, useState } from 'react';
 // import './Hero.css';
 // import { nanoid } from 'nanoid/non-secure';
@@ -62,11 +62,14 @@
 
 // export default ShotnerForm;
 
-'use client';
+// 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import React, { FormEvent, useState } from 'react';
+import './Hero.css';
+import { nanoid } from 'nanoid/non-secure';
 
 import { Button } from '../../../components/ui/button';
 import {
@@ -86,8 +89,10 @@ const formSchema = z.object({
 	}),
 });
 
+	
 function ShortnerForm() {
-	// ...
+	const [hashcode, setHashcode] = useState<string>('');
+	const [copied, setCopied] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -96,26 +101,49 @@ function ShortnerForm() {
 		},
 	});
 
+	const handleCopy = () => {
+		navigator.clipboard.writeText(`http://localhost:3000/${hashcode}`).then((res) => {
+			setCopied(true);
+		});
+	};
+
+
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
-	}
+	const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+		const inputValue = values.username;
+		try {
+			const response = await fetch('http://localhost:4000/api/shortUrl', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ url: inputValue, hashcode: nanoid(8) }),
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setHashcode(data.hashcode);
+				form.reset();
+			}
+		} catch (error) {
+			console.error('Error submitting URL:', error);
+		}
+	};
+
 
 	return (
+		<>
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
 					name="username"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Username</FormLabel>
+							<FormLabel>Link</FormLabel>
 							<FormControl>
-								<Input placeholder="shadcn" {...field} />
+								<Input placeholder="Paste your link here" {...field} className="bg-black w-[280%]"/>
 							</FormControl>
-							<FormDescription>This is your public display name.</FormDescription>
+							<FormDescription>The Best url shortner</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -123,6 +151,18 @@ function ShortnerForm() {
 				<Button type="submit">Submit</Button>
 			</form>
 		</Form>
+		{hashcode && (
+						<div className='mt-10' >
+							<h1>Shorty URL:</h1>
+							<p>
+								<a  href={`http://localhost:3000/${hashcode}`}>
+									http://localhost:3000/{hashcode}
+								</a>
+							</p>
+							<Button onClick={handleCopy}>{copied ? 'Copied' : 'Copy url'}</Button>
+						</div>
+					)}
+		</>
 	);
 }
 
