@@ -102,7 +102,7 @@ function ShortnerForm() {
 	});
 
 	const handleCopy = () => {
-		navigator.clipboard.writeText(`http://localhost:3000/${hashcode}`).then((res) => {
+		navigator.clipboard.writeText(`https://shorty-topaz.vercel.app/${hashcode}`).then((res) => {
 			setCopied(true);
 		});
 	};
@@ -111,8 +111,9 @@ function ShortnerForm() {
 	// 2. Define a submit handler.
 	const handleSubmit = async (values: z.infer<typeof formSchema>) => {
 		const inputValue = values.username;
+		console.log(process.env.NEXT_PUBLIC_API_URL)
 		try {
-			const response = await fetch('http://localhost:4000/api/shortUrl', {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shortUrl`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -155,8 +156,8 @@ function ShortnerForm() {
 						<div className='mt-10' >
 							<h1>Shorty URL:</h1>
 							<p>
-								<a  href={`http://localhost:3000/${hashcode}`}>
-									http://localhost:3000/{hashcode}
+								<a  href={`https://shorty-topaz.vercel.app/${hashcode}`}>
+								https://shorty-topaz.vercel.app/{hashcode}
 								</a>
 							</p>
 							<Button onClick={handleCopy}>{copied ? 'Copied' : 'Copy url'}</Button>

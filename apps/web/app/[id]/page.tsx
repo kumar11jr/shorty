@@ -8,7 +8,7 @@ const page = () => {
 	path = path.substring(1)
 
 	useEffect(() => {
-		axios.post('http://localhost:4000/api/getUrl', { hashcode: path }).then((res) => {
+		axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/getUrl`, { hashcode: path }).then((res) => {
 			redirectRoute(res.data[0].url);
 		});
 	}, [path]);
